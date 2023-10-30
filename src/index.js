@@ -75,10 +75,7 @@ program.command("remove").alias("r").description("Remove Task").action(() => {
         let tasks = JSON.parse(fs.readFileSync(`./${path}`, "utf8"));
         let tasksToDeleted = ans.remove;
 
-        tasks = tasks.map((ele) => {
-          if(typeof ele.task === "object") return {"task" : Object.keys(ele.task)[0]};
-          else return ele;
-        }).filter((ele) => !tasksToDeleted.includes(ele.task));
+        tasks = tasks.filter((ele) => !tasksToDeleted.includes(ele.task) && !tasksToDeleted.includes(Object.keys(ele.task)[0]));
 
         fs.writeFileSync(`./${path}`, JSON.stringify(tasks), 'utf-8');
         console.log("Done!");
